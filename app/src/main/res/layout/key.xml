@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.alorma.lipsumkeyboard.input.LipsumKeyboardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/keyboardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+
+    android:background="#ffba4e51"
+    android:keyBackground="@drawable/btn_keyboard_key"
+    />

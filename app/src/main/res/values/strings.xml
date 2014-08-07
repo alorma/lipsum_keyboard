@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">LipsumKeyboard</string>
+    <string name="flipsum_keyboard">Lipsum</string>
+    <string name="fast_input_settings">Lipsum settings</string>
+    <string name="lipsum_word">Lorem</string>
+    <string name="lipsum_paragrah"><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit. In dapibus felis pulvinar nisl bibendum, et lacinia massa interdum. Suspendisse a gravida neque, sit amet porta eros. Aliquam nec sodales velit. Fusce in lorem nunc. Interdum et malesuada fames ac ante ipsum primis in faucibus. Suspendisse eu tempor orci. Ut dapibus odio eu nulla mollis pretium sed vitae erat. In gravida nec sapien sit amet ullamcorper. Aliquam nisi orci, mattis in vehicula at, vehicula non neque. Fusce rutrum id nibh vel facilisis. Fusce eget dolor dui. Nulla in mauris vel magna rhoncus placerat. Vestibulum condimentum tortor felis, eget ullamcorper sapien posuere eget.]]></string>
+</resources>
