@@ -6,7 +6,25 @@
     android:keyHeight="100dip"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
+    <Row>
 
+        <Key
+            android:keyEdgeFlags="left"
+            android:codes="3"
+            android:keyLabel="-"
+            android:keyWidth="50%" />
+        <Key
+            android:keyEdgeFlags="left"
+            android:codes="4"
+            android:keyLabel="1"
+            android:keyWidth="50%" />
+
+        <Key
+            android:keyEdgeFlags="right"
+            android:codes="5"
+            android:keyLabel="+"
+            android:keyWidth="50%" />
+    </Row>
     <Row>
 
         <Key
@@ -20,7 +38,8 @@
             android:codes="2"
             android:keyLabel="Word"
             android:keyWidth="50%" />
-
     </Row>
+
+
 
 </Keyboard>

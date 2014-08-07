@@ -9,12 +9,15 @@ import android.util.AttributeSet;
  */
 public class LipsumKeyboardView extends KeyboardView {
 
+    private int max;
 
     public LipsumKeyboardView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        setPreviewEnabled(false);
     }
 
     public LipsumKeyboardView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        setPreviewEnabled(false);
     }
 }

@@ -14,21 +14,26 @@ import com.alorma.lipsumkeyboard.R;
  */
 public class LipsumIME extends InputMethodService implements KeyboardView.OnKeyboardActionListener {
 
-
     private StringBuilder text = new StringBuilder(0);
 
     private LipsumKeyboard lipsumKeyboard = null;
     private LipsumKeyboardView lipsumKeyboardView = null;
+    private String[] paragrahs;
 
     @Override
     public void onCreate() {
         super.onCreate();
+
+        String lipsumText = getString(R.string.lipsum);
+
+        paragrahs = lipsumText.split("\n");
 
     }
 
     @Override
     public void onInitializeInterface() {
         lipsumKeyboard = new LipsumKeyboard(this, R.layout.lipsum);
+        lipsumKeyboard.setMax(paragrahs.length);
     }
 
     @Override
@@ -48,15 +53,72 @@ public class LipsumIME extends InputMethodService implements KeyboardView.OnKeyb
     public void onKey(int primaryCode, int[] keyCodes) {
         switch (primaryCode) {
             case 1:
-                commitText(getString(R.string.lipsum_paragrah));
+                commitParagprahs(lipsumKeyboard.getShow());
                 break;
             case 2:
-                commitText(getString(R.string.lipsum_word));
+                commitWords(lipsumKeyboard.getShow());
+                break;
+            case 3:
+                lipsumKeyboard.decrement();
+                lipsumKeyboardView.invalidateAllKeys();
+                break;
+            case 4:
+
+                break;
+            case 5:
+                lipsumKeyboard.increment();
+                lipsumKeyboardView.invalidateAllKeys();
                 break;
 
             default:
                 break;
         }
+    }
+
+    private void commitParagprahs(int show) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < show; i++) {
+            builder.append(paragrahs[i]);
+            builder.append("\n");
+            builder.append("\n");
+        }
+        commitText(builder.toString());
+    }
+
+    private void commitWords(int show) {
+        int pLength = 0;
+        boolean stop = false;
+        int accumulateWords = 0;
+        while (pLength < paragrahs.length && !stop) {
+            String[] words = paragrahs[pLength++].split(" ");
+            accumulateWords += words.length;
+            if (accumulateWords >= show) {
+                stop = true;
+            }
+        }
+
+        StringBuilder builder = new StringBuilder();
+        int usedWords = 0;
+        for (int i = 0; i < pLength; i++) {
+            String[] words = paragrahs[i].split(" ");
+            boolean fullParagraph = false;
+            for (int i1 = 0; i1 < words.length; i1++) {
+                if (usedWords++ < show) {
+                    builder.append(words[i1]);
+                    builder.append(" ");
+                    if (i1 + 1 >= words.length) {
+                        fullParagraph = true;
+                    }
+                } else {
+                    break;
+                }
+            }
+            if (fullParagraph) {
+                builder.append("\n");
+                builder.append("\n");
+            }
+        }
+        commitText(builder.toString());
     }
 
     @Override
@@ -76,13 +138,12 @@ public class LipsumIME extends InputMethodService implements KeyboardView.OnKeyb
 
     @Override
     public void swipeLeft() {
-        handleBackspace();
+        // handleBackspace();
     }
 
     @Override
     public void swipeRight() {
-        InputConnection ic = getCurrentInputConnection();
-        ic.deleteSurroundingText(6, 0);
+
     }
 
     @Override
@@ -96,6 +157,8 @@ public class LipsumIME extends InputMethodService implements KeyboardView.OnKeyb
     }
 
     private void commitText(String s) {
+        lipsumKeyboard.reset();
+        lipsumKeyboardView.invalidateAllKeys();
         InputConnection ic = getCurrentInputConnection();
         ic.commitText(s, 1);
         text.setLength(0);
@@ -106,6 +169,5 @@ public class LipsumIME extends InputMethodService implements KeyboardView.OnKeyb
             getCurrentInputConnection().sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
         }
         text.setLength(0);
-
     }
 }
