@@ -11,10 +11,18 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    signingConfigs {
+        playStore {
+            storeFile file(SIGN_FILE)
+            storePassword SIGN_KEYSTORE_PASS
+            keyAlias SIGN_KEYSTORE_ALIAS
+            keyPassword SIGN_KEYSTORE_ALIAS_PASS
+        }
+    }
+
     buildTypes {
         release {
-            runProguard false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.playStore
         }
     }
 }
