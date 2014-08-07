@@ -14,8 +14,6 @@ import com.alorma.lipsumkeyboard.R;
  */
 public class LipsumIME extends InputMethodService implements KeyboardView.OnKeyboardActionListener {
 
-    private StringBuilder text = new StringBuilder(0);
-
     private LipsumKeyboard lipsumKeyboard = null;
     private LipsumKeyboardView lipsumKeyboardView = null;
     private String[] paragrahs;
@@ -46,7 +44,7 @@ public class LipsumIME extends InputMethodService implements KeyboardView.OnKeyb
 
     @Override
     public void onStartInput(EditorInfo attribute, boolean restarting) {
-        text.setLength(0);
+
     }
 
     @Override
@@ -121,6 +119,14 @@ public class LipsumIME extends InputMethodService implements KeyboardView.OnKeyb
         commitText(builder.toString());
     }
 
+    private void commitText(String s) {
+        lipsumKeyboard.reset();
+        lipsumKeyboardView.invalidateAllKeys();
+        InputConnection ic = getCurrentInputConnection();
+        ic.commitText(s, 1);
+
+    }
+
     @Override
     public void onRelease(int primaryCode) {
 
@@ -138,7 +144,7 @@ public class LipsumIME extends InputMethodService implements KeyboardView.OnKeyb
 
     @Override
     public void swipeLeft() {
-        // handleBackspace();
+
     }
 
     @Override
@@ -154,20 +160,5 @@ public class LipsumIME extends InputMethodService implements KeyboardView.OnKeyb
     @Override
     public void swipeUp() {
 
-    }
-
-    private void commitText(String s) {
-        lipsumKeyboard.reset();
-        lipsumKeyboardView.invalidateAllKeys();
-        InputConnection ic = getCurrentInputConnection();
-        ic.commitText(s, 1);
-        text.setLength(0);
-    }
-
-    private void handleBackspace() {
-        if (text.length() == 0) {
-            getCurrentInputConnection().sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
-        }
-        text.setLength(0);
     }
 }
